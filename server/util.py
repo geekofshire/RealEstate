@@ -11,13 +11,13 @@ def load_saved_artifacts():
     global  __data_columns
     global __locations
 
-    with open("columns.json", "r") as f:
+    with open("server/columns.json", "r") as f:
         __data_columns = json.load(f)['data_columns']
         __locations = __data_columns[3:]  # first 3 columns are sqft, bath, bhk
 
     global __model
     if __model is None:
-        with open("banglore_home_prices_model.pickle", "rb") as f:
+        with open("server/banglore_home_prices_model.pickle", "rb") as f:
             __model = pickle.load(f)
     print("loading saved artifacts...done")
 
@@ -27,7 +27,7 @@ def get_location_names():
 def get_data_columns():
     return __data_columns
 
-def get_estimated_price(sqft,bath,bhk,location):
+def get_estimated_price(location,sqft,bhk,bath):
     try:
         loc_index=__data_columns.index(location.lower())
     except:
